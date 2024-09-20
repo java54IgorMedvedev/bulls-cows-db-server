@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 @Table(name="move")
 public class Move {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String sequence;
 	private int bulls;
@@ -26,10 +27,12 @@ public class Move {
 	public GameGamer getGameGamer() {
 		return gameGamer;
 	}
-	@Override
-	public String toString() {
-		return "Move [id=" + id + ", sequence=" + sequence + ", bulls=" + bulls + ", cows=" + cows + "]";
+	public Move() {
 	}
-	
-	
+	public Move(String sequence, int bulls, int cows, GameGamer gameGamer) {
+		this.sequence = sequence;
+		this.bulls = bulls;
+		this.cows = cows;
+		this.gameGamer = gameGamer;
+	}	
 }

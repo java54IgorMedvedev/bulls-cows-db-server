@@ -8,41 +8,37 @@ import jakarta.persistence.*;
 
 public class Game {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private LocalDateTime date;
-	private boolean is_finished;
+	@Column(name="date_time", nullable = true)
+	private LocalDateTime dateTime;
+	@Column(name="is_finished", nullable = false)
+	private boolean isFinished;
+	@Column(nullable = false)
 	private String sequence;
-	public Game(long id, LocalDateTime date, boolean is_finished, String sequence) {
-		this.id = id;
-		this.date = date;
-		this.is_finished = is_finished;
+	public Game(LocalDateTime dateTime, boolean isFinished, String sequence) {
+		this.dateTime = dateTime;
+		this.isFinished = isFinished;
 		this.sequence = sequence;
 	}
 	public Game() {
 	}
 	public LocalDateTime getDate() {
-		return date;
+		return dateTime;
 	}
-	public void setDate(LocalDateTime date) {
-		this.date = date;
+	public void setDate(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
-	public boolean isIs_finished() {
-		return is_finished;
+	public boolean isfinished() {
+		return isFinished;
 	}
-	public void setIs_finished(boolean is_finished) {
-		this.is_finished = is_finished;
+	public void setfinished(boolean isFinished) {
+		this.isFinished = isFinished;
 	}
 	public long getId() {
 		return id;
 	}
 	public String getSequence() {
 		return sequence;
-	}
-	@Override
-	public String toString() {
-		return "Game [id=" + id + ", date=" + date + ", is_finished=" + is_finished + ", sequence=" + sequence + "]";
-	}
-	
-	
-	
+	}	
 }
