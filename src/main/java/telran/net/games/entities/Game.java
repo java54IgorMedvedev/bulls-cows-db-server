@@ -1,4 +1,4 @@
-package telran.net.games;
+package telran.net.games.entities;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;

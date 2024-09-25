@@ -1,7 +1,8 @@
-package telran.net.games;
+package telran.net.games.entities;
 import jakarta.persistence.*;
 @Entity
-@Table(name="game_gamer")
+@Table(name="game_gamer",uniqueConstraints =
+{@UniqueConstraint(columnNames = {"game_id", "gamer_id"} )})
 public class GameGamer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,15 +27,15 @@ public class GameGamer {
 	public Gamer getGamer() {
 		return gamer;
 	}
-	public GameGamer() {}
-	
+	public GameGamer() {
+		
+	}
 	public GameGamer(boolean isWinner, Game game, Gamer gamer) {
 		this.isWinner = isWinner;
 		this.game = game;
 		this.gamer = gamer;
-	}	
-	public void setWinner(boolean isWinner) {
-	    this.isWinner = isWinner;
 	}
-
+	public void setWinner(boolean isWinner) {
+		this.isWinner = isWinner;
+	}	
 }

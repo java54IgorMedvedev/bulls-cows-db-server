@@ -1,4 +1,4 @@
-package telran.net.games;
+package telran.net.games.entities;
 import jakarta.persistence.*;
 @Entity
 @Table(name="move")
