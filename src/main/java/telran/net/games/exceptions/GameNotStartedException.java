@@ -1,7 +1,8 @@
 package telran.net.games.exceptions;
 
+@SuppressWarnings("serial")
 public class GameNotStartedException extends IllegalStateException {
-    public GameNotStartedException(long gameId) {
-        super("Game with ID " + gameId + " has not started yet.");
-    }
+	public GameNotStartedException(long gameId) {
+		super("Not yet started game " + gameId);
+	}
 }
