@@ -34,5 +34,9 @@ public class Move {
 		this.bulls = bulls;
 		this.cows = cows;
 		this.gameGamer = gameGamer;
-	}	
+	}
+	
+	
+	
+	
 }

@@ -40,5 +40,9 @@ public class Game {
 	}
 	public String getSequence() {
 		return sequence;
-	}	
+	}
+	
+	
+	
+	
 }

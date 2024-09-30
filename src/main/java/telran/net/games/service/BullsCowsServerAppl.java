@@ -1,4 +1,4 @@
-package telran.net.games;
+package telran.net.games.service;
 
 import java.util.HashMap;
 

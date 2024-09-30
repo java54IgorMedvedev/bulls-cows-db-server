@@ -19,5 +19,9 @@ public class Gamer {
 	}
 	public LocalDate getBirthdate() {
 		return birthdate;
-	}	
+	}
+	
+	
+	
+	
 }

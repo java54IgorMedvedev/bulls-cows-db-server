@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.json.JSONObject;
 
+
 public record SequenceGameGamerDto(String sequence, Long gameId, String username) {
 	private static final String GAME_ID_FIELD = "gameId";
 	private static final String USERNAME_FIELD = "username";

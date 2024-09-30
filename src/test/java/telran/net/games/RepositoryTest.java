@@ -41,17 +41,27 @@ public class RepositoryTest {
 		
 		
 	}
+	
 	@Test
 	@Order(2)
 	void createGamerTest() {
 		repository.createNewGamer(gamerUsername, LocalDate.of(2000, 1, 1));
 		Gamer gamer = repository.getGamer(gamerUsername);
 		assertNotNull(gamer);
-		assertThrowsExactly(GamerAlreadyExistsException.class, () ->
+		assertThrowsExactly(GamerAlreadyExistsdException.class, () ->
 				repository.createNewGamer(gamerUsername, LocalDate.of(2000, 1, 1)));
 		
 	}
+	@Test
 	@Order(3)
+	void getIdsNonStartedNoGamerTest() {
+		List<Long> ids =
+				repository.getIdsNonStartedGamesNoGamer(gamerUsername);
+		assertEquals(gameId, ids.get(0));
+		ids = repository.getIdsNonStartedGamesGamer(gamerUsername);
+		assertTrue(ids.isEmpty());
+	}
+	@Order(4)
 	@Test
 	void createGameGamerTest() {
 		repository.createGameGamer(gameId, gamerUsername);
@@ -59,19 +69,28 @@ public class RepositoryTest {
 		assertEquals(1, gamers.size());
 		assertEquals(gamerUsername, gamers.get(0));
 	}
-	@Order(4)
+	@Order(5)
+	@Test
+	void getIdsNonStartedGamerTest() {
+		List<Long> ids =
+				repository.getIdsNonStartedGamesGamer(gamerUsername);
+		assertEquals(gameId, ids.get(0));
+		ids = repository.getIdsNonStartedGamesNoGamer(gamerUsername);
+		assertTrue(ids.isEmpty());
+	}
+	@Order(6)
 	@Test
 	void isGameStartedTest() {
 		assertFalse(repository.isGameStarted(gameId));
 	}
-	@Order(5)
+	@Order(7)
 	@Test
 	void setStartDateTest() {
 		repository.setStartDate(gameId, LocalDateTime.now());
 		assertTrue(repository.isGameStarted(gameId));
 	}
 	
-	@Order(6)
+	@Order(8)
 	@Test
 	void createGameGamerMoveAllGameGamersMovesTest() {
 		repository.createGameGamerMove(new MoveDto(gameId, gamerUsername, "1243", 2, 2));
@@ -81,23 +100,30 @@ public class RepositoryTest {
 		assertEquals(new MoveData("1243", 2, 2), moves.get(0));
 		assertEquals(new MoveData("1234", 4, 0), moves.get(1));
 	}
-	@Order(7)
+	@Order(9)
 	@Test
 	void isGameFinishedTest() {
 		assertFalse(repository.isGameFinished(gameId));
 	}
-	@Order(8)
+	@Order(10)
+	@Test
+	void getIdsStartedGamesGamer() {
+		List<Long> ids = repository.getIdsStartedGamesGamer(gamerUsername);
+		assertEquals(gameId, ids.get(0));
+	}
+	@Order(11)
 	@Test
 	void setIsFinishedTest() {
 		repository.setIsFinished(gameId);
 		assertTrue(repository.isGameFinished(gameId));
 	}
-	@Order(9)
+	
+	@Order(12)
 	@Test
 	void isWinnerTest() {
 		assertFalse(repository.isWinner(gameId, gamerUsername));
 	}
-	@Order(10)
+	@Order(13)
 	@Test
 	void setWinnerTest() {
 		repository.setWinner(gameId, gamerUsername);
@@ -136,4 +162,8 @@ public class RepositoryTest {
 		assertThrowsExactly (GameGamerNotFoundException.class, ()-> repository.createGameGamerMove
 		(new MoveDto(1000l, gamerUsername, "1243", 2, 2)));
 	}
+	
+	
+
+
 }

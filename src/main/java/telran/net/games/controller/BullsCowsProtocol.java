@@ -1,7 +1,7 @@
 package telran.net.games.controller;
 
-import java.time.LocalDate;
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 import org.json.JSONObject;
@@ -34,6 +34,10 @@ public class BullsCowsProtocol implements Protocol {
 			case "moveProcessing" -> moveProcessing(requestData);
 			case "gameOver" -> gameOver(requestData);
 			case "getGameGamers" -> getGameGamers(requestData);
+			case "getNotStartedGamesWithGamer" -> getNotStartedGamesWithGamer(requestData);
+			case "getNotStartedGamesWithOutGamer" -> getNotStartedGamesWithOutGamer(requestData);
+			case "getStartedGamesWithGamer" -> getStartedGamesWithGamer(requestData);
+			case "loginGamer" -> loginGamer(requestData);
 			default -> new Response(ResponseCode.WRONG_REQUEST_TYPE,
 					requestType);
 			};
@@ -55,8 +59,10 @@ public class BullsCowsProtocol implements Protocol {
 		return getResponseOk(responseString );
 	}
 	Response registerGamer(String requestData) {
-		//TODO
-		String responseString = null;
+		UsernameBirthdate nameDate = new UsernameBirthdate(new JSONObject(requestData));
+		
+		bcService.registerGamer(nameDate.username(), nameDate.birthDate());
+		String responseString = "";
 		return getResponseOk(responseString );
 	}
 	Response gamerJoinGame(String requestData) {
@@ -66,8 +72,8 @@ public class BullsCowsProtocol implements Protocol {
 		return getResponseOk(responseString );
 	}
 	Response getNotStartedGames(String requestData) {
-		//TODO
-		String responseString = null;
+		List<Long> ids = bcService.getNotStartedGames();
+		String responseString = resultsToJSON(ids);
 		return getResponseOk(responseString );
 	}
 	Response moveProcessing(String requestData) {
@@ -81,13 +87,39 @@ public class BullsCowsProtocol implements Protocol {
 		return getResponseOk(responseString );
 	}
 	Response gameOver(String requestData) {
-		//TODO
-		String responseString = null;
+		long gameId = Long.parseLong(requestData);
+		boolean res = bcService.gameOver(gameId);
+		String responseString = Boolean.toString(res);
 		return getResponseOk(responseString );
 	}
 	Response getGameGamers(String requestData) {
-		//TODO
-		String responseString = null;
+		long gameId = Long.parseLong(requestData);
+		List<String> gamers = bcService.getGameGamers(gameId);
+		String responseString = resultsToJSON(gamers);
+		return getResponseOk(responseString );
+	}
+	Response getNotStartedGamesWithGamer(String requestData) {
+		String username = requestData;
+		List<Long> ids = bcService.getNotStartedGamesWithGamer(username);
+		String responseString = resultsToJSON(ids);
+		return getResponseOk(responseString );
+	}
+	Response getNotStartedGamesWithOutGamer(String requestData) {
+		String username = requestData;
+		List<Long> ids = bcService.getNotStartedGamesWithOutGamer(username);
+		String responseString = resultsToJSON(ids);
+		return getResponseOk(responseString );
+	}
+	Response getStartedGamesWithGamer(String requestData) {
+		String username = requestData;
+		List<Long> ids = bcService.getStartedGamesWithGamer(username);
+		String responseString = resultsToJSON(ids);
+		return getResponseOk(responseString );
+	}
+	Response loginGamer(String requestData) {
+		String username = requestData;
+		String usernameFromServer = bcService.loginGamer(username);
+		String responseString = usernameFromServer;
 		return getResponseOk(responseString );
 	}
 
